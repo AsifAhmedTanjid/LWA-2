@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Calculator Button and Modal Styles */
+        .calc-fab {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 1001;
+            background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 2rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .calc-fab:hover {
+            background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%);
+        }
+        .calc-modal-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.25);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .calc-modal {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            min-width: 320px;
+            max-width: 90vw;
+            position: relative;
+        }
+        .calc-close {
+            position: absolute;
+            top: 10px;
+            right: 18px;
+            font-size: 1.5rem;
+            color: #888;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .calc-display {
+            width: 100%;
+            height: 48px;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            padding: 0.5rem;
+            text-align: right;
+            background: #f7f7f7;
+        }
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 54px);
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        .calc-btn {
+            background: #e0e0e0;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            padding: 0.7rem 0;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .calc-btn:hover {
+            background: #b2f7ef;
+        }
+        .calc-btn.op {
+            background: #f7c1e3;
+            color: #6a0572;
+        }
+        .calc-btn.eq {
+            background: #43cea2;
+            color: #fff;
+        }
+        @media (max-width: 600px) {
+            .calc-modal { min-width: 90vw; }
+            .calc-buttons { grid-template-columns: repeat(4, 1fr); }
+        }
+        body {
+            background: linear-gradient(13VVVVVVVVVVV5deg, #a8edea 0%, #fed6e3 100%);
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .container {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            padding: 2rem 2.5rem 2rem 2.5rem;
+            margin-top: 3rem;
+            width: 100%;
+            max-width: 420px;
+        }
+        h2 {
+            text-align: center;
+            color: #6a0572;
+            margin-bottom: 1.5rem;
+        }
+        .input-group {
+            margin-bottom: 1.2rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+            color: #333;
+            font-weight: 500;
+        }
+        input[type="number"] {
+            width: 60%;
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+        }
+        select {
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        button {
+            background: linear-gradient(90deg, #ff758c 0%, #ff7eb3 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.7rem 1.5rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #ff7eb3 0%, #ff758c 100%);
+        }
+        #result {
+            margin-top: 1.2rem;
+            font-size: 1.1rem;
+            color: #6a0572;
+            text-align: center;
+        }
+        .tracker-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .tracker-table th, .tracker-table td {
+            padding: 0.7rem 0.5rem;
+            text-align: center;
+        }
+        .tracker-table th {
+            background: #f7c1e3;
+            color: #6a0572;
+        }
+        .tracker-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+                max-width: 98vw;
+            }
+            .tracker-table th, .tracker-table td {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.2rem;
+            }
+        }
+    </style>
+    </style>
+</head>
+<body>
+    <!-- Calculator Floating Button -->
+    <button class="calc-fab" title="Calculator" onclick="showCalculator()">&#x1F5A9;</button>
+    <!-- Calculator Modal -->
+    <div class="calc-modal-bg" id="calcModalBg">
+        <div class="calc-modal">
+            <button class="calc-close" onclick="hideCalculator()">&times;</button>
+            <input type="text" class="calc-display" id="calcDisplay" readonly>
+            <div class="calc-buttons">
+                <button class="calc-btn" onclick="calcInput('7')">7</button>
+                <button class="calc-btn" onclick="calcInput('8')">8</button>
+                <button class="calc-btn" onclick="calcInput('9')">9</button>
+                <button class="calc-btn op" onclick="calcInput('/')">&divide;</button>
+                <button class="calc-btn" onclick="calcInput('4')">4</button>
+                <button class="calc-btn" onclick="calcInput('5')">5</button>
+                <button class="calc-btn" onclick="calcInput('6')">6</button>
+                <button class="calc-btn op" onclick="calcInput('*')">&times;</button>
+                <button class="calc-btn" onclick="calcInput('1')">1</button>
+                <button class="calc-btn" onclick="calcInput('2')">2</button>
+                <button class="calc-btn" onclick="calcInput('3')">3</button>
+                <button class="calc-btn op" onclick="calcInput('-')">&minus;</button>
+                <button class="calc-btn" onclick="calcInput('0')">0</button>
+                <button class="calc-btn" onclick="calcInput('.')">.</button>
+                <button class="calc-btn" onclick="calcClear()">C</button>
+                <button class="calc-btn op" onclick="calcInput('+')">+</button>
+                <button class="calc-btn eq" style="grid-column: span 4;" onclick="calcEquals()">=</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2>BMI Tracker</h2>
+        <form id="bmiForm" onsubmit="event.preventDefault(); calculateAndTrackBMI();">
+            <div class="input-group">
+                <label for="weight">Weight:</label>
+                <div class="row">
+                    <input type="number" id="weight" step="0.1" min="0">
+                    <select id="weightUnit">
+                        <option value="kg">kg</option>
+                        <option value="lb">lb</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="height">Height:</label>
+                <div class="row" id="heightRow">
+                    <input type="number" id="height" step="0.01" min="0">
+                    <select id="heightUnit" onchange="toggleHeightInputs()">
+                        <option value="m">m</option>
+                        <option value="cm">cm</option>
+                        <option value="in">in</option>
+                        <option value="ftin">ft+in</option>
+                    </select>
+                </div>
+                <div class="row" id="ftinRow" style="display:none; margin-top:0.5rem;">
+                    <input type="number" id="heightFt" placeholder="ft" min="0" style="width:40px;">
+                    <span>ft</span>
+                    <input type="number" id="heightIn" placeholder="in" min="0" style="width:50px;">
+                    <span>in</span>
+                </div>
+            </div>
+            <button type="submit">Add Entry</button>
+        </form>
+        <div id="result"></div>
+        <table class="tracker-table" id="bmiTable" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Weight</th>
+                    <th>Height</th>
+                    <th>BMI</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script>
+        // Calculator logic
+        let calcValue = '';
+        function showCalculator() {
+            document.getElementById('calcModalBg').style.display = 'flex';
+            document.getElementById('calcDisplay').value = calcValue;
+        }
+        function hideCalculator() {
+            document.getElementById('calcModalBg').style.display = 'none';
+        }
+        function calcInput(val) {
+            if (calcValue.length > 20) return;
+            calcValue += val;
+            document.getElementById('calcDisplay').value = calcValue;
+        }
+        function calcClear() {
+            calcValue = '';
+            document.getElementById('calcDisplay').value = '';
+        }
+        function calcEquals() {
+            try {
+                // Only allow numbers and operators
+                if (/^[0-9+\-*/.]+$/.test(calcValue)) {
+                    // eslint-disable-next-line no-eval
+                    let result = eval(calcValue);
+                    if (typeof result === 'number' && isFinite(result)) {
+                        calcValue = result.toString();
+                        document.getElementById('calcDisplay').value = calcValue;
+                    } else {
+                        document.getElementById('calcDisplay').value = 'Error';
+                        calcValue = '';
+                    }
+                } else {
+                    document.getElementById('calcDisplay').value = 'Error';
+                    calcValue = '';
+                }
+            } catch {
+                document.getElementById('calcDisplay').value = 'Error';
+                calcValue = '';
+            }
+        }
+        // ...existing code...
+        function toggleHeightInputs() {
+            const unit = document.getElementById('heightUnit').value;
+            document.getElementById('height').style.display = (unit === 'ftin') ? 'none' : '';
+            document.getElementById('ftinRow').style.display = (unit === 'ftin') ? '' : 'none';
+        }
+
+        function convertWeightToKg(weight, unit) {
+            return unit === 'kg' ? weight : weight * 0.453592;
+        }
+
+        function convertHeightToMeters(height, unit) {
+            if (unit === 'm') return height;
+            if (unit === 'cm') return height / 100;
+            if (unit === 'in') return height * 0.0254;
+            return 0;
+        }
+
+        function convertFtInToMeters(ft, inch) {
+            return (parseFloat(ft) * 0.3048) + (parseFloat(inch) * 0.0254);
+        }
+
+        function getHeightDisplay(height, unit, ft, inch) {
+            if (unit === 'ftin') {
+                return `${ft} ft ${inch} in`;
+            }
+            return `${height} ${unit}`;
+        }
+
+        function getWeightDisplay(weight, unit) {
+            return `${weight} ${unit}`;
+        }
+
+        function getBMICategory(bmi) {
+            return bmi < 18.5 ? "Underweight" :
+                   bmi < 25 ? "Normal weight" :
+                   bmi < 30 ? "Overweight" : "Obese";
+        }
+
+        function calculateAndTrackBMI() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const weightUnit = document.getElementById('weightUnit').value;
+            const heightUnit = document.getElementById('heightUnit').value;
+            let height, heightDisplay, ft, inch;
+
+            if (heightUnit === 'ftin') {
+                ft = document.getElementById('heightFt').value || 0;
+                inch = document.getElementById('heightIn').value || 0;
+                height = convertFtInToMeters(ft, inch);
+                heightDisplay = getHeightDisplay('', 'ftin', ft, inch);
+            } else {
+                height = parseFloat(document.getElementById('height').value);
+                heightDisplay = getHeightDisplay(height, heightUnit);
+                ft = '';
+                inch = '';
+            }
+
+            if (weight > 0 && height > 0) {
+                const weightKg = convertWeightToKg(weight, weightUnit);
+                const heightM = height;
+                const bmi = weightKg / (heightM * heightM);
+                const category = getBMICategory(bmi);
+                document.getElementById('result').innerHTML = `<strong>Your BMI is ${bmi.toFixed(2)} (${category})</strong>`;
+                addToTable(weight, weightUnit, heightDisplay, bmi, category);
+            } else {
+                document.getElementById('result').innerText = "Please enter valid values.";
+            }
+        }
+
+        function addToTable(weight, weightUnit, heightDisplay, bmi, category) {
+            const table = document.getElementById('bmiTable');
+            const tbody = table.querySelector('tbody');
+            const now = new Date();
+            const dateStr = now.toLocaleString();
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${dateStr}</td>
+                <td>${getWeightDisplay(weight, weightUnit)}</td>
+                <td>${heightDisplay}</td>
+                <td>${bmi.toFixed(2)}</td>
+                <td>${category}</td>
+            `;
+            tbody.prepend(row);
+            table.style.display = '';
+        }
+    </script>
+</body>
+</html>

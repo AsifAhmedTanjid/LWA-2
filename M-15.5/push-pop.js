@@ -1,0 +1,14 @@
+const numbers = [12,75,38,92];
+const ages = [];
+console.log(numbers);
+numbers.push(44);
+console.log(numbers);
+numbers.push(45,66,333,24222,45343);
+console.log(numbers);
+numbers.push('balam');
+console.log(numbers);
+numbers.pop();
+console.log(numbers);
+const out2= numbers.pop();
+console.log(numbers);
+console.log(out2);

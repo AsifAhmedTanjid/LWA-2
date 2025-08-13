@@ -10,8 +10,7 @@
  * 
  * 
  * 
- * 
-* 
+ *  
  */
 
 function sumOfNumbers(numbers) {

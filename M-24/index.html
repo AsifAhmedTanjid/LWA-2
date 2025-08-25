@@ -61,6 +61,14 @@
         const lang = document.getElementById('lang');
         lang.innerText='javascript';
 
+        //get elements by class name
+
+        const foreignFood = document.getElementsByClassName('foreign-food');
+        console.log(foreignFood);
+        for(const element of foreignFood){
+            console.log(element.innerText);
+            
+        }
         
     </script>
   </body>

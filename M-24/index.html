@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Manupulation</title>
+    <style>
+        h1{
+            color: gold;
+        }
+        #food-title{
+            color: green;
+        }
+    </style>
+  </head>
+  <body>
+    <main>
+        <section>
+            <ul>
+                <li>Hello</li>
+                <li>World</li>
+                <li>Of</li>
+                <li>JS</li>
+            </ul>
+        </section>
+
+        <section>
+            <h1 id="food-title">Foods I love</h1>
+            <ul>
+                <li>Rice</li>
+                <li>Fish</li>
+                <li>lentil</li>
+                <li>pasta</li>
+                <li>pizza</li>
+                <li>burger</li>
+                <li>soup</li>
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        // document.getElementsByTagName
+        const liCollection = document.getElementsByTagName('li');
+        for(const li of liCollection){
+            console.log(li.innerText);
+        }
+
+        //all h1 tags
+
+        const allheadings = document.getElementsByTagName('h1');
+                for(const heading of allheadings){
+            console.log(heading.innerText);
+        }
+        
+    </script>
+  </body>
+</html>

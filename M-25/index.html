@@ -1,20 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=`">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=`" />
     <title>DOM events</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Hello Events</h1>
-    <button onclick="console.log(7);
-    ">click me</button>
 
-    <button onclick="console.log(62);
-    ">Another button</button>
-    <button onclick="console.log('im clicked');
-    ">third button</button>
-    
-</body>
-<script src="js/events.js"></script>
+    <!-- option 1 for event handler -->
+    <button
+      onclick="console.log(7);
+    "
+    >
+      click me
+    </button>
+
+    <button
+      onclick="console.log(62);
+    "
+    >
+      Another button
+    </button>
+    <button
+      onclick="console.log('im clicked');
+    "
+    >
+      third button
+    </button>
+
+    <br />
+    <!-- option 2 for event handler -->
+    <button onclick="makeYellow()">Make yellow</button>
+    <button onclick="makeRed()">Make Red</button>
+
+    <br />
+
+    <button id="btn-make-blue">Make blue</button>
+    <button id="btn-make-purple">Make PURPLE</button>
+    <script></script>
+  </body>
+  <script src="js/events.js"></script>
 </html>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DOM Manupulation</title>
+    <link rel="stylesheet" href="styles/style.css">
     <style>
         h1{
             color: gold;
@@ -50,20 +51,20 @@
         // document.getElementsByTagName
         const liCollection = document.getElementsByTagName('li');
         for(const li of liCollection){
-            console.log(li.innerText);
+            // console.log(li.innerText);
         }
 
         //all h1 tags
 
         const allheadings = document.getElementsByTagName('h1');
                 for(const heading of allheadings){
-            console.log(heading.innerText);
+            // console.log(heading.innerText);
         }
 
         // getbyid
         
         const foodTitleH1 = document.getElementById('food-title');
-        console.log(foodTitleH1.innerText);
+        // console.log(foodTitleH1.innerText);
         foodTitleH1.innerText='food i love to eat';
         
         const lang = document.getElementById('lang');
@@ -72,9 +73,9 @@
         //get elements by class name
 
         const foreignFood = document.getElementsByClassName('foreign-food');
-        console.log(foreignFood);
+        // console.log(foreignFood);
         for(const element of foreignFood){
-            console.log(element.innerText);
+            // console.log(element.innerText);
             
         }
 
@@ -84,12 +85,13 @@
         const spanElements =document.querySelectorAll('#old-dhaka p span');
         for(const span of spanElements)
         {
-            console.log(span.innerText);
+            // console.log(span.innerText);
             
         }
 
         
         
     </script>
+    <script src="js/cssinJS.js"></script>
   </body>
 </html>

@@ -11,11 +11,19 @@
         #food-title{
             color: green;
         }
+        .food .foreign-food{
+            font-weight: 900;
+        }
     </style>
   </head>
   <body>
     <main>
-        <section>
+        <section class="greetings" id="old-dhaka">
+            <p>Lorem ipsum <span>oli goli</span> dolor sit, amet consectetur adipisicing elit. <span>Alias</span> Libero, vitae?</p>
+
+
+            <h1> Lorem, ipsum dolor. <span>Some Text</span></h1>
+
             <ul>
                 <li>Hello</li>
                 <li>World</li>
@@ -24,7 +32,7 @@
             </ul>
         </section>
 
-        <section>
+        <section class="food">
             <h1 id="food-title">Foods I love</h1>
             <ul>
                 <li>Rice</li>
@@ -69,6 +77,18 @@
             console.log(element.innerText);
             
         }
+
+
+        //query selector all
+
+        const spanElements =document.querySelectorAll('#old-dhaka p span');
+        for(const span of spanElements)
+        {
+            console.log(span.innerText);
+            
+        }
+
+        
         
     </script>
   </body>

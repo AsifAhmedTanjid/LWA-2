@@ -20,7 +20,7 @@
                 <li>Hello</li>
                 <li>World</li>
                 <li>Of</li>
-                <li>JS</li>
+                <li id="lang">JS</li>
             </ul>
         </section>
 
@@ -30,10 +30,10 @@
                 <li>Rice</li>
                 <li>Fish</li>
                 <li>lentil</li>
-                <li>pasta</li>
-                <li>pizza</li>
-                <li>burger</li>
-                <li>soup</li>
+                <li class="foreign-food">pasta</li>
+                <li class="foreign-food">pizza</li>
+                <li class="foreign-food">burger</li>
+                <li class="foreign-food">soup</li>
             </ul>
         </section>
     </main>
@@ -51,6 +51,16 @@
                 for(const heading of allheadings){
             console.log(heading.innerText);
         }
+
+        // getbyid
+        
+        const foodTitleH1 = document.getElementById('food-title');
+        console.log(foodTitleH1.innerText);
+        foodTitleH1.innerText='food i love to eat';
+        
+        const lang = document.getElementById('lang');
+        lang.innerText='javascript';
+
         
     </script>
   </body>

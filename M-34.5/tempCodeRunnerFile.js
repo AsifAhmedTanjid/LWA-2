@@ -1,4 +1,4 @@
-.then(data=>console.log('promise resolved',data)
-)
-.catch(error => console.log(error)
-)
+fetch('https://jsonplaceholder.typicode.com/users')
+// .then(res=>res.json())
+// .then(data=>console.log('got the data')
+// )

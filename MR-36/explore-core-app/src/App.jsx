@@ -1,5 +1,6 @@
 
 import './App.css'
+import ToDo from './todo';
 
 function App() {
  
@@ -11,6 +12,9 @@ function App() {
       {/* <Sports></Sports>
       <Person></Person>
       <Sports></Sports> */}
+      <ToDo task='learn React' isDone={true}></ToDo>
+      <ToDo task='revise js' isDone={false}></ToDo>
+      <ToDo task='go out' isDone={false}></ToDo>
 
       <Student></Student>
       <Student></Student>
@@ -18,6 +22,7 @@ function App() {
       <Developer name="shifa" tech="C#"></Developer>
       <Player name='tamim' run='4000'></Player>
       <Player name='mushfiq' run='3000'></Player>
+      
 
   
     </>

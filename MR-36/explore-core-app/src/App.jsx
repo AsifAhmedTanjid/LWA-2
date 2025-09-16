@@ -16,6 +16,8 @@ function App() {
       <Student></Student>
       <Developer name="asif" tech="js"></Developer>
       <Developer name="shifa" tech="C#"></Developer>
+      <Player name='tamim' run='4000'></Player>
+      <Player name='mushfiq' run='3000'></Player>
 
   
     </>
@@ -73,6 +75,16 @@ function Student(){
     <div className='student'>
       <p>Name:</p>
       <p>Department:</p>
+    </div>
+  )
+}
+
+// const {name, run}={name:'tamim',run:'4000'}
+function Player({name,run}){
+  return(
+    <div className='student'>
+      <p>Name: {name}</p>
+      <p>Runs: {run}</p>
     </div>
   )
 }

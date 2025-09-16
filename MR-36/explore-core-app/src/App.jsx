@@ -6,22 +6,48 @@ function App() {
 
   return (
     <>
-      <h1>Vite + React</h1>
+      <h1>React core concept</h1>
       <Person></Person>
-      <Sports></Sports>
+      {/* <Sports></Sports>
       <Person></Person>
-      <Sports></Sports>
+      <Sports></Sports> */}
+
+      <Student></Student>
+      <Student></Student>
+      <Developer name="asif" tech="js"></Developer>
+      <Developer name="shifa" tech="C#"></Developer>
 
   
     </>
   )
 }
 
+function Developer(props){
+  console.log(props);
+  
+  return(
+
+    <div style={{
+      border:'2px solid green',
+      borderRadius:'30px'
+
+    }}>
+      <h3>Developer: {props.name}</h3>
+      <p>Technology: {props.tech}</p>
+    </div>
+  )
+}
+
 function Person(){
   const age = 17;
-  const name="asif"
+  const name="asif";
+  const personStyle={
+    color: 'blue',
+    textAlign:'right',
+    backgroundColor: 'cyan'
+  }
   return (
-    <p>I am a Person: {name} {age}</p>
+    <p style={personStyle}>I am a Person: {name} {age}</p>
   )
 }
 
@@ -42,4 +68,12 @@ function Sports(){
   )
 }
 
+function Student(){
+  return(
+    <div className='student'>
+      <p>Name:</p>
+      <p>Department:</p>
+    </div>
+  )
+}
 export default App

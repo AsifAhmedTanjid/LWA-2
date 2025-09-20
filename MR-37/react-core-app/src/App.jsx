@@ -1,6 +1,7 @@
 
 
 import './App.css'
+import Counter from './counter';
 
 function App() {
 
@@ -21,6 +22,8 @@ function App() {
   return (
     <>
       <h3>Vite + React</h3>
+
+      <Counter></Counter>
       <button onClick={handleClick}>Click me</button> 
       {/* shall not wite handleClick(). if we add () then it executed immedietly */}
 

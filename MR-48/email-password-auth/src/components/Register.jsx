@@ -1,6 +1,12 @@
 import React from "react";
 
 const Register = () => {
+    const handleRegister=(e)=>{
+        e.preventDefault();
+
+        console.log('CLICKS');
+        
+    }
     
   return (
     <div className="hero bg-base-200 min-h-screen">
@@ -11,7 +17,7 @@ const Register = () => {
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <div className="card-body">
-            <form>
+            <form onSubmit={handleRegister}>
               <fieldset className="fieldset">
                 <label className="label">Email</label>
                 <input type="email" className="input" placeholder="Email" />

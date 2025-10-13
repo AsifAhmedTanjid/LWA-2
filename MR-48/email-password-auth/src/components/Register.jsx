@@ -3,8 +3,9 @@ import React from "react";
 const Register = () => {
     const handleRegister=(e)=>{
         e.preventDefault();
-
-        console.log('CLICKS');
+        const email=e.target.email.value;
+        const password=e.target.password.value;
+        console.log('CLICKS',email,password);
         
     }
     
@@ -20,12 +21,13 @@ const Register = () => {
             <form onSubmit={handleRegister}>
               <fieldset className="fieldset">
                 <label className="label">Email</label>
-                <input type="email" className="input" placeholder="Email" />
+                <input name="email" type="email" className="input" placeholder="Email" />
                 <label className="label">Password</label>
                 <input
                   type="password"
                   className="input"
                   placeholder="Password"
+                  name="password"
                 />
                 <div>
                   <a className="link link-hover">Forgot password?</a>

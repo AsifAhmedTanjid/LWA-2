@@ -11,9 +11,13 @@ const Register = () => {
         const password=e.target.password.value;
         console.log('CLICKS',email,password);
         // reset status : success or error
-
         setError('');
         setSuccess(false)
+        const passwordPattern=/^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,}$/;
+        if(!passwordPattern.test(password)){
+          setError("Password must be at least 6 characters long, include at least one uppercase letter, one lowercase letter, and one special character.")
+          return;
+        }
         createUserWithEmailAndPassword(auth,email,password)
         .then(result=>{
           

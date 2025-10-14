@@ -1,10 +1,11 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
-import React, { useState } from "react";
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router";
 import { auth } from "../firebase/firebase.init";
 
 const Login = () => {
     const [error, setError] = useState("");
+    const emailRef =useRef()
    const handleLogin=e=>{
     e.preventDefault();
     const email = e.target.email.value;
@@ -14,6 +15,9 @@ const Login = () => {
     signInWithEmailAndPassword(auth,email,password)
     .then(result=>{
         console.log(result.user);
+        if(!result.user.emailVerified){
+            alert("Please Verify your email address")
+        }
         
     })
     .catch(error=>{
@@ -21,6 +25,20 @@ const Login = () => {
         setError(error.message)
         
     })
+   }
+
+   const handleForgetPassword=()=>{
+        // alert("forget")
+        const email =emailRef.current.value;
+        console.log(email);
+        sendPasswordResetEmail(auth,email)
+        .then(()=>{
+            alert("please check your email")
+        })
+        .catch(error=>{
+                    setError(error.message)
+        })
+        
    }
   return (
     <div className="hero bg-base-200 min-h-screen">
@@ -33,7 +51,7 @@ const Login = () => {
             <form onSubmit={handleLogin}>
               <fieldset className="fieldset">
                 <label className="label">Email</label>
-                <input type="email" name='email' className="input" placeholder="Email" />
+                <input type="email" name='email' className="input" placeholder="Email"  ref={emailRef}/>
                 <label className="label">Password</label>
                 <input
                   type="password"
@@ -41,7 +59,7 @@ const Login = () => {
                   placeholder="Password"
                   name='password'
                 />
-                <div>
+                <div onClick={handleForgetPassword}>
                   <a className="link link-hover">Forgot password?</a>
                 </div>
                 <button className="btn btn-neutral mt-4">Login</button>

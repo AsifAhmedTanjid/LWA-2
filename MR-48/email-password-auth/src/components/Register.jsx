@@ -2,15 +2,17 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../firebase/firebase.init";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link } from "react-router";
 
 const Register = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
-  const [showPassword,setShowPassword]=useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const handleRegister = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const terms = e.target.terms.checked;
     console.log("CLICKS", email, password);
     // reset status : success or error
     setError("");
@@ -20,6 +22,10 @@ const Register = () => {
       setError(
         "Password must be at least 6 characters long, include at least one uppercase letter, one lowercase letter, and one special character."
       );
+      return;
+    }
+    if(!terms){
+      setError("Please accept terms and condition")
       return;
     }
     createUserWithEmailAndPassword(auth, email, password)
@@ -33,11 +39,10 @@ const Register = () => {
         setError(error.message);
       });
   };
-  const handleTogglePassword=(e)=>{
-e.preventDefault();
-setShowPassword(!showPassword)
-
-  }
+  const handleTogglePassword = (e) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="hero bg-base-200 min-h-screen">
@@ -59,16 +64,29 @@ setShowPassword(!showPassword)
                 <label className="label">Password</label>
                 <div className="relative">
                   <input
-                    type={showPassword ? "text":"password"}
+                    type={showPassword ? "text" : "password"}
                     className="input"
                     placeholder="Password"
                     name="password"
                   />
-                  <button className="btn btn-xs absolute top-2 right-5" onClick={handleTogglePassword}>{showPassword?<FaEyeSlash></FaEyeSlash>:<FaEye></FaEye>}</button>
+                  <button
+                    className="btn btn-xs absolute top-2 right-5"
+                    onClick={handleTogglePassword}
+                  >
+                    {showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>}
+                  </button>
                 </div>
                 <div>
-                  <a className="link link-hover">Forgot password?</a>
+                  <label className="label">
+                    <input
+                      type="checkbox"
+                      name='terms'
+                      className="checkbox"
+                    />
+                    Accept Terms And Condition
+                  </label>
                 </div>
+      
                 <button className="btn btn-neutral mt-4">Register</button>
               </fieldset>
               {success && (
@@ -76,6 +94,7 @@ setShowPassword(!showPassword)
               )}
               {error && <p className="text-red-500">{error}</p>}
             </form>
+            <p>Already have an account? <Link to="/login" className="text-blue-400 underline">Login</Link></p>
           </div>
         </div>
       </div>

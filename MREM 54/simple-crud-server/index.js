@@ -38,6 +38,13 @@ async function run(){
 
         //add database related api here
 
+
+        app.get("/users",async(req,res)=>{
+            const cursor =usersCollection.find();
+            const result = await cursor.toArray();
+            res.send(result)
+        })
+
         app.post('/users',async(req,res)=>{
             console.log('hitting the user post api');
             const newUser=req.body;

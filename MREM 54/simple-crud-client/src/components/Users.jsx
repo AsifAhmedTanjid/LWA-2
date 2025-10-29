@@ -1,17 +1,17 @@
 import React, { use, useState } from "react";
 import { Link } from "react-router";
 
-const Users = ({userPromise}) => {
-    const initialUsers =use(userPromise)
-    // console.log(initialUsers);
-    const [users,setUsers]=useState(initialUsers)
-    
+const Users = ({ userPromise }) => {
+  const initialUsers = use(userPromise);
+  // console.log(initialUsers);
+  const [users, setUsers] = useState(initialUsers);
+
   const handleUser = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
     // console.log({ name, email });
-    const newUser ={name,email}
+    const newUser = { name, email };
 
     //save this user data to database (via server)
     fetch("http://localhost:3000/users", {
@@ -24,37 +24,34 @@ const Users = ({userPromise}) => {
       .then((res) => res.json())
       .then((data) => {
         // console.log("after saving user", data);
-        if(data.insertedId){
-            newUser._id=data.insertedId;
-            const newUsers=[...users,newUser];
-            setUsers(newUsers)
-            alert("user added successfully")
+        if (data.insertedId) {
+          newUser._id = data.insertedId;
+          const newUsers = [...users, newUser];
+          setUsers(newUsers);
+          alert("user added successfully");
         }
       });
   };
 
-const handleDeleteUser=(id)=>{
+  const handleDeleteUser = (id) => {
     // console.log("deleted",id);
-    fetch(`http://localhost:3000/users/${id}`,{
-        method:'DELETE'
+    fetch(`http://localhost:3000/users/${id}`, {
+      method: "DELETE",
     })
-    .then(res=>res.json())
-    .then(data=>{
+      .then((res) => res.json())
+      .then((data) => {
         // console.log('after delete',data);
-        if(data.deletedCount){
-            alert("deleted successfully")
-            const remainingUsers=users.filter(user=>user._id!=id)
-            setUsers(remainingUsers)
+        if (data.deletedCount) {
+          alert("deleted successfully");
+          const remainingUsers = users.filter((user) => user._id != id);
+          setUsers(remainingUsers);
         }
-        
-    })
-    
-
-}
+      });
+  };
 
   return (
     <div>
-        <h1>user:{users.length}</h1>
+      <h1>user:{users.length}</h1>
       <form onSubmit={handleUser}>
         <input type="text" name="name" id="" placeholder="Name" />
         <br />
@@ -63,14 +60,15 @@ const handleDeleteUser=(id)=>{
         <input type="submit" value="Add User" />
       </form>
 
-
       <p>-------------------------------</p>
-      {
-        users.map(user=> <p key={user._id}>{user.name}: {user.email}
-        <Link to={`/users/${user._id}`}>Details</Link>
-        <Link to={`/update/${user._id}`}>Edit</Link>
-        <button onClick={()=>handleDeleteUser(user._id)}>x</button></p>)
-      }
+      {users.map((user) => (
+        <p key={user._id}>
+          {user.name}: {user.email}
+          <Link to={`/users/${user._id}`}>Details</Link>
+          <Link to={`/update/${user._id}`}>Edit</Link>
+          <button onClick={() => handleDeleteUser(user._id)}>x</button>
+        </p>
+      ))}
     </div>
   );
 };

@@ -31,8 +31,28 @@ const Users = ({userPromise}) => {
         }
       });
   };
+
+const handleDeleteUser=(id)=>{
+    console.log("deleted",id);
+    fetch(`http://localhost:3000/users/${id}`,{
+        method:'DELETE'
+    })
+    .then(res=>res.json())
+    .then(data=>{
+        console.log('after delete',data);
+        if(data.deletedCount){
+            alert("deleted successfully")
+            
+        }
+        
+    })
+    
+
+}
+
   return (
     <div>
+        <h1>user:{users.length}</h1>
       <form onSubmit={handleUser}>
         <input type="text" name="name" id="" placeholder="Name" />
         <br />
@@ -45,7 +65,7 @@ const Users = ({userPromise}) => {
       <p>-------------------------------</p>
       {
         users.map(user=> <p key={user._id}>{user.name}: {user.email}
-        <button>x</button></p>)
+        <button onClick={()=>handleDeleteUser(user._id)}>x</button></p>)
       }
     </div>
   );

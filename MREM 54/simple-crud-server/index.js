@@ -32,14 +32,18 @@ app.get("/",(req,res)=>{
 async function run(){
     try {
         await client.connect();
+        const usersDB =client.db('usersDB');
+        const usersCollection=usersDB.collection('users')
 
 
         //add database related api here
 
-        app.post('/users',(req,res)=>{
+        app.post('/users',async(req,res)=>{
             console.log('hitting the user post api');
             const newUser=req.body;
             console.log("user info",newUser);
+            const result =await usersCollection.insertOne(newUser);
+            res.send(result)
             
             
         })

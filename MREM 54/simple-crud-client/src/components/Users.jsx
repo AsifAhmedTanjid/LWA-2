@@ -19,6 +19,9 @@ const Users = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("after saving user", data);
+        if(data.insertedId){
+            alert("user added successfully")
+        }
       });
   };
   return (
